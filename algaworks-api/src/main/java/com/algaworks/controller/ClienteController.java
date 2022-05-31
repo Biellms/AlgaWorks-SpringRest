@@ -25,6 +25,6 @@ public class ClienteController {
 		c2.setEmail("nilda@email.com");
 		c2.setTelefone("11 3333-3333");
 		
-		return Arrays.asList(c1,c2);
+		return Arrays.asList(c1, c2);
 	}
 }
