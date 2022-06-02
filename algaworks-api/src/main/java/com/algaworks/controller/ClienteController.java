@@ -21,10 +21,16 @@ public class ClienteController {
 		
 		var c2 = new Cliente();
 		c2.setId(2L);
-		c2.setNome("Nilda");
-		c2.setEmail("nilda@email.com");
+		c2.setNome("Bruna");
+		c2.setEmail("bruna@email.com");
 		c2.setTelefone("11 3333-3333");
 		
-		return Arrays.asList(c1, c2);
+		var c3 = new Cliente();
+		c3.setId(3L);
+		c3.setNome("Nicoly");
+		c3.setEmail("nicoly@email.com");
+		c3.setTelefone("11 4444-4444");
+		
+		return Arrays.asList(c1, c2, c3);
 	}
 }
