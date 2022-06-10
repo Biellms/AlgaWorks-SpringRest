@@ -30,14 +30,14 @@ public class Produto {
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode() { // Gerar codigo
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((sku == null) ? 0 : sku.hashCode());
 		return result;
 	}
 
-	@Override
+	@Override // Ensinar o objeto a se comparar
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
