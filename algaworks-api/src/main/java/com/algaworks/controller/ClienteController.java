@@ -52,4 +52,18 @@ public class ClienteController {
 	public Cliente Post(@RequestBody Cliente cliente) {
 		return clienteRepository.save(cliente);
 	}
+	
+	//Put
+	@PutMapping("/{clienteId}")
+	public ResponseEntity<Cliente> Put(@PathVariable Long clienteId, 
+			@RequestBody Cliente cliente) {
+		if(!clienteRepository.existsById(clienteId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		cliente.setId(clienteId);
+		cliente = clienteRepository.save(cliente);
+		
+		return ResponseEntity.ok(cliente);
+	}
 }
