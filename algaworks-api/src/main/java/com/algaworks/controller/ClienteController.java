@@ -2,9 +2,7 @@ package com.algaworks.controller;
 
 import java.util.*;
 
-import javax.persistence.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +24,7 @@ public class ClienteController {
 		return clienteRepository.findAll();
 	}
 	
+	//Get nome
 	@GetMapping("/nome/{clienteNome}")
 	public List<Cliente> getByNameContaining(@PathVariable String clienteNome) {
 		return clienteRepository.findByNomeContaining(clienteNome);
@@ -45,5 +44,12 @@ public class ClienteController {
 	//	}
 	//		
 	//	return ResponseEntity.notFound().build();
+	}
+	
+	//Post
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente Post(@RequestBody Cliente cliente) {
+		return clienteRepository.save(cliente);
 	}
 }
