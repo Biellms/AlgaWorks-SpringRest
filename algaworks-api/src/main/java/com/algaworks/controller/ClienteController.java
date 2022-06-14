@@ -2,6 +2,8 @@ package com.algaworks.controller;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,14 +51,14 @@ public class ClienteController {
 	//Post
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente Post(@RequestBody Cliente cliente) {
+	public Cliente Post(@Valid @RequestBody Cliente cliente) {
 		return clienteRepository.save(cliente);
 	}
 	
 	//Put
 	@PutMapping("/{clienteId}")
 	public ResponseEntity<Cliente> Put(@PathVariable Long clienteId, 
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		if(!clienteRepository.existsById(clienteId)) {
 			return ResponseEntity.notFound().build();
 		}
