@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.algaworks.domain.model.Cliente;
 import com.algaworks.domain.repository.ClienteRepository;
-import com.algaworks.domain.service.CatalogoClienteService;
+import com.algaworks.domain.service.ClienteService;
 
 import lombok.AllArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 public class ClienteController {
 
 	private ClienteRepository clienteRepository;
-	private CatalogoClienteService catalogoClienteService;
+	private ClienteService clienteService;
 	
 	//Get All
 	@GetMapping
@@ -54,7 +54,7 @@ public class ClienteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente Post(@Valid @RequestBody Cliente cliente) {
-		return catalogoClienteService.salvar(cliente);
+		return clienteService.salvar(cliente);
 	}
 	
 	//Put
@@ -66,7 +66,7 @@ public class ClienteController {
 		}
 		
 		cliente.setId(clienteId);
-		cliente = catalogoClienteService.salvar(cliente);
+		cliente = clienteService.salvar(cliente);
 		
 		return ResponseEntity.ok(cliente);
 	}
@@ -78,7 +78,7 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		catalogoClienteService.excluir(clienteId);
+		clienteService.excluir(clienteId);
 		
 		return ResponseEntity.noContent().build();
 	}
