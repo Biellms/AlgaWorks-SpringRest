@@ -19,7 +19,7 @@ public class ClienteService {
 	public Cliente salvar(Cliente cliente) {
 		boolean emailUsage = clienteRepository.findByEmail(cliente.getEmail())
 				.stream()
-					.anyMatch(clienteExist -> !clienteExist.equals(cliente));
+					.anyMatch(clienteExist -> !clienteExist.equals(cliente)); // Cliente ja existe ou nao
 		
 		if (emailUsage) {
 			throw new DomainException("Já existe um cliente cadastrado com este e-mail!");
