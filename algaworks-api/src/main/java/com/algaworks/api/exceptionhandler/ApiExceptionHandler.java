@@ -51,7 +51,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(DomainException.class)
 	public ResponseEntity<Object> handleDomain(DomainException ex, WebRequest request) {
-		HttpStatus status = HttpStatus.BAD_REQUEST;		
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		
 		Problem problema = new Problem();
 		problema.setStatus(status.value());
