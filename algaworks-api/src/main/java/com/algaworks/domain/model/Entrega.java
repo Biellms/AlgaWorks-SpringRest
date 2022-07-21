@@ -25,10 +25,10 @@ public class Entrega {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne // Muitas entregas para um cliente
 	private Cliente cliente;
 	
-	@Embedded
+	@Embedded // Anotação para indicar que é uma relação embutida
 	private Destinatario destinatario;
 	
 	private BigDecimal taxa;

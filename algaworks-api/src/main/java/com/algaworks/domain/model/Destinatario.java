@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Embeddable
+@Embeddable // Classe incorporável
 public class Destinatario {
 
 	@Column(name = "destinatario_nome")
