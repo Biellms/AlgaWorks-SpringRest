@@ -28,7 +28,7 @@ public class ClienteController {
 		return clienteRepository.findAll();
 	}
 	
-	//Get nome
+	//Get Containing nome
 	@GetMapping("/nome/{clienteNome}")
 	public List<Cliente> getByNameContaining(@PathVariable String clienteNome) {
 		return clienteRepository.findByNomeContaining(clienteNome);
