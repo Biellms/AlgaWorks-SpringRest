@@ -42,6 +42,8 @@ public class Entrega {
 	@ManyToOne // Muitas entregas para um cliente
 	private Cliente cliente;
 	
+	@Valid
+	@NotNull
 	@Embedded
 	private Destinatario destinatario;
 	

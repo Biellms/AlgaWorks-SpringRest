@@ -35,6 +35,14 @@ public class EntregaController {
 		return entregaRepository.findAll();
 	}
 	
+	//Get By Id
+	@GetMapping("/{entregaId}")
+	public ResponseEntity<Entrega> getById(@PathVariable Long entregaId) {
+		return entregaRepository.findById(entregaId)
+				.map(ResponseEntity::ok)
+					.orElse(ResponseEntity.notFound().build());
+	}
+	
 	//Post
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
