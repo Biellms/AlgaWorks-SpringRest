@@ -2,6 +2,9 @@ package com.algaworks.domain.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import javax.validation.groups.Default;
+
+import com.algaworks.domain.validationgroups.ValidationGroups;
 
 import lombok.*;
 
@@ -14,6 +17,7 @@ public class Cliente {
 	@EqualsAndHashCode.Include // EqualsAndHashCode especifico
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(groups = ValidationGroups.ClienteId.class)
 	private Long id;
 	
 	@NotBlank

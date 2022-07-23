@@ -31,7 +31,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
-		List<Problem.Campo> campos = new ArrayList<>(); // ArrayList dos erros
+		List<Problem.Campo> campos = new ArrayList<>(); // ArrayList do nome e mensagem do erro
 		
 		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
 			String nome = ((FieldError) error).getField(); // Pega o nome do campo onde esta o erro

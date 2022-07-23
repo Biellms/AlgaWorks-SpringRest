@@ -2,6 +2,8 @@ package com.algaworks.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +38,7 @@ public class EntregaController {
 	//Post
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Entrega Solicitar(@RequestBody Entrega entrega) {
+	public Entrega Solicitar(@Valid @RequestBody Entrega entrega) {
 		
 		return entregaService.solicitar(entrega);
 	}
