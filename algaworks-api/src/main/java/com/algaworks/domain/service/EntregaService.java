@@ -1,15 +1,13 @@
 package com.algaworks.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.algaworks.domain.exception.DomainException;
 import com.algaworks.domain.model.Cliente;
 import com.algaworks.domain.model.Entrega;
 import com.algaworks.domain.model.StatusEntrega;
-import com.algaworks.domain.repository.ClienteRepository;
 import com.algaworks.domain.repository.EntregaRepository;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +25,7 @@ public class EntregaService {
 				
 		entrega.setCliente(cliente);
 		entrega.setStatus(StatusEntrega.PENDENTE);
-		entrega.setDataPedido(LocalDateTime.now());
+		entrega.setDataPedido(OffsetDateTime.now());
 		
 		return entregaRepository.save(entrega);
 	}
