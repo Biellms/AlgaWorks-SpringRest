@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.api.representation.DestinatarioRepresentation;
+import com.algaworks.api.representation.EntregaRepresentation;
 import com.algaworks.domain.model.Entrega;
 import com.algaworks.domain.repository.EntregaRepository;
 import com.algaworks.domain.service.EntregaService;
@@ -37,10 +39,25 @@ public class EntregaController {
 	
 	//Get By Id
 	@GetMapping("/{entregaId}")
-	public ResponseEntity<Entrega> getById(@PathVariable Long entregaId) {
+	public ResponseEntity<EntregaRepresentation> getById(@PathVariable Long entregaId) {
 		return entregaRepository.findById(entregaId)
-				.map(ResponseEntity::ok)
-					.orElse(ResponseEntity.notFound().build());
+				.map(entrega -> { // Implementando um modelo de representação de entrega
+					EntregaRepresentation entregaModel = new EntregaRepresentation();
+					entregaModel.setId(entrega.getId());
+					entregaModel.setNomeCliente(entrega.getCliente().getNome());
+					entregaModel.setDestinatario(new DestinatarioRepresentation());
+					entregaModel.getDestinatario().setNome(entrega.getDestinatario().getNome());
+					entregaModel.getDestinatario().setLogradouro(entrega.getDestinatario().getLogradouro());
+					entregaModel.getDestinatario().setNumero(entrega.getDestinatario().getNumero());
+					entregaModel.getDestinatario().setComplemento(entrega.getDestinatario().getComplemento());
+					entregaModel.getDestinatario().setBairro(entrega.getDestinatario().getBairro());
+					entregaModel.setStatus(entrega.getStatus());
+					entregaModel.setDataPedido(entrega.getDataPedido());
+					entregaModel.setDataFinalizacao(entrega.getDataFinalizado());
+					
+					return ResponseEntity.ok(entregaModel);
+				}).orElse(ResponseEntity.notFound().build());
+					
 	}
 	
 	//Post
