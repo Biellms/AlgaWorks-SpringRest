@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,7 @@ public class EntregaController {
 
 	private EntregaRepository entregaRepository;
 	private EntregaService entregaService;
+	private ModelMapper modelMapper;
 
 	//Get All
 	@GetMapping
@@ -42,22 +44,10 @@ public class EntregaController {
 	public ResponseEntity<EntregaRepresentation> getById(@PathVariable Long entregaId) {
 		return entregaRepository.findById(entregaId)
 				.map(entrega -> { // Implementando um modelo de representação de entrega
-					EntregaRepresentation entregaModel = new EntregaRepresentation();
-					entregaModel.setId(entrega.getId());
-					entregaModel.setNomeCliente(entrega.getCliente().getNome());
-					entregaModel.setDestinatario(new DestinatarioRepresentation());
-					entregaModel.getDestinatario().setNome(entrega.getDestinatario().getNome());
-					entregaModel.getDestinatario().setLogradouro(entrega.getDestinatario().getLogradouro());
-					entregaModel.getDestinatario().setNumero(entrega.getDestinatario().getNumero());
-					entregaModel.getDestinatario().setComplemento(entrega.getDestinatario().getComplemento());
-					entregaModel.getDestinatario().setBairro(entrega.getDestinatario().getBairro());
-					entregaModel.setStatus(entrega.getStatus());
-					entregaModel.setDataPedido(entrega.getDataPedido());
-					entregaModel.setDataFinalizacao(entrega.getDataFinalizado());
+					EntregaRepresentation entregaModel = modelMapper.map(entrega, EntregaRepresentation.class); // Utilizando ModelMapper
 					
 					return ResponseEntity.ok(entregaModel);
 				}).orElse(ResponseEntity.notFound().build());
-					
 	}
 	
 	//Post
