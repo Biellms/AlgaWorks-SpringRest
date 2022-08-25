@@ -2,7 +2,7 @@
   
 ### **AlgaWorks | Mergulho Spring Rest**
   
-Mergulho Spring Rest apresentado pela AlgaWorks. Com foco em criação de API's Rest utilizando Java e Spring.
+Mergulho Spring Rest apresentado pela AlgaWorks. Com foco em criação de API's Rest utilizando Java e Spring. Usando boas práticas e padrões de mercado.
 </div>
 
 #
