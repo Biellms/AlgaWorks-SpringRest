@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.api.assembler.EntregaAssembler;
 import com.algaworks.api.representation.DestinatarioRepresentation;
 import com.algaworks.api.representation.EntregaRepresentation;
 import com.algaworks.domain.model.Entrega;
@@ -30,35 +31,35 @@ import lombok.AllArgsConstructor;
 public class EntregaController {
 
 	private EntregaRepository entregaRepository;
+	
 	private EntregaService entregaService;
-	private ModelMapper modelMapper;
+	
+	/**
+	 * Implementando um modelo de representação de entrega 
+	 * Utilizando Assembler para montar o retorno, convertendo de um tipo para outro
+	 * Utilizando ModelMapper para evitar código boilerplate
+	 */
+	private EntregaAssembler entregaAssembler;
 
-	//Get All
 	@GetMapping
-	public List<Entrega> getAll() {
-		return entregaRepository.findAll();
+	public List<EntregaRepresentation> getAll() {
+		return entregaAssembler.toColletionModel(entregaRepository.findAll());
 	}
 	
-	//Get By Id
 	@GetMapping("/{entregaId}")
 	public ResponseEntity<EntregaRepresentation> getById(@PathVariable Long entregaId) {
 		return entregaRepository.findById(entregaId)
-				.map(entrega -> { // Implementando um modelo de representação de entrega
-					EntregaRepresentation entregaModel = modelMapper.map(entrega, EntregaRepresentation.class); // Utilizando ModelMapper
-					
-					return ResponseEntity.ok(entregaModel);
-				}).orElse(ResponseEntity.notFound().build());
+				.map(entrega ->  ResponseEntity.ok(entregaAssembler.toModel(entrega)))
+					.orElse(ResponseEntity.notFound().build());
 	}
 	
-	//Post
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Entrega Solicitar(@Valid @RequestBody Entrega entrega) {
-		
-		return entregaService.solicitar(entrega);
+	public EntregaRepresentation Solicitar(@Valid @RequestBody Entrega entrega) {
+		Entrega entregaSolicitada = entregaService.solicitar(entrega);
+			return entregaAssembler.toModel(entregaSolicitada);
 	}
-	
-	//Delete
+
 	@DeleteMapping("/{entregaId}")
 	public ResponseEntity<Void> Delete(@PathVariable Long entregaId) {
 		if(!entregaRepository.existsById(entregaId)) {

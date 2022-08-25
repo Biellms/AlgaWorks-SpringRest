@@ -38,6 +38,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 			String mensagem = messageSource.getMessage(error, LocaleContextHolder.getLocale()); // Pega a MensageSource do erro que foi atribuida no messages.properties
 			
 			campos.add(new Problem.Campo(nome, mensagem));
+			
+//			campos.add(new Problem.Campo(nome, mensagem));
 		}
 		
 		Problem problema = new Problem();

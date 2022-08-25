@@ -40,14 +40,6 @@ public class ClienteController {
 		return clienteRepository.findById(clienteId)
 				.map(ResponseEntity::ok) // .map(cliente -> ResponseEntity.ok(cliente))
 					.orElse(ResponseEntity.notFound().build());
-		
-	//	Optional<Cliente> cliente = clienteRepository.findById(clienteId);
-	//		
-	//	if (cliente.isPresent()) {
-	//		return ResponseEntity.ok(cliente.get());
-	//	}
-	//		
-	//	return ResponseEntity.notFound().build();
 	}
 	
 	//Post

@@ -6,7 +6,9 @@ import javax.validation.groups.Default;
 
 import com.algaworks.domain.validationgroups.ValidationGroups;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) // Gerar especificamente um ou mais Equals e HashCode
 @Getter
