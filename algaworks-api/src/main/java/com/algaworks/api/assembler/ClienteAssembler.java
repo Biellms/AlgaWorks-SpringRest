@@ -7,7 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.api.model.ClienteModel;
+import com.algaworks.api.model.input.ClienteInput;
+import com.algaworks.api.model.input.EntregaInput;
 import com.algaworks.domain.model.Cliente;
+import com.algaworks.domain.model.Entrega;
 
 import lombok.AllArgsConstructor;
 
@@ -28,4 +31,7 @@ public class ClienteAssembler {
 					.collect(Collectors.toList());
 	}
 	
+	public Cliente toEntity(ClienteInput clienteInput) {
+		return modelMapper.map(clienteInput, Cliente.class);
+	}
 }

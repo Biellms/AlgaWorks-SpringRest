@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.algaworks.api.assembler.ClienteAssembler;
 import com.algaworks.api.model.ClienteModel;
+import com.algaworks.api.model.input.ClienteInput;
 import com.algaworks.domain.exception.DomainException;
 import com.algaworks.domain.model.Cliente;
 import com.algaworks.domain.repository.ClienteRepository;
@@ -51,8 +52,11 @@ public class ClienteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente Post(@Valid @RequestBody Cliente cliente) {
-		return clienteService.salvar(cliente);
+	public ClienteModel Post(@Valid @RequestBody ClienteInput clienteInput) {
+		Cliente novoCliente = clienteAssembler.toEntity(clienteInput);
+		Cliente clienteCadastrado = clienteService.salvar(novoCliente); 
+		
+		return clienteAssembler.toModel(clienteCadastrado);
 	}
 
 	@PutMapping("/{clienteId}")
