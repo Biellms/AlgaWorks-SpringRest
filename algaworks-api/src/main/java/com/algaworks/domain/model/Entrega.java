@@ -26,6 +26,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/*
+ * @Embedded -> Anotação para indicar que é uma relação embutida
+ * @Enumerated(EnumType.STRING) -> Indica que o valor de retorno da classe Enum sera uma String
+ * @JsonProperty(access = Access.READ_ONLY) -> Anotação para o usuario apenas ler(Get), e não poder modificar o valor(Set) na requisição com Json
+ * */
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -37,36 +42,21 @@ public class Entrega {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Valid
-	@ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class)
-	@NotNull
 	@ManyToOne // Muitas entregas para um cliente
 	private Cliente cliente;
 	
-	@Valid
-	@NotNull
 	@Embedded
 	private Destinatario destinatario;
 	
-	@NotNull
 	private BigDecimal taxa;
 	
-	@JsonProperty(access = Access.READ_ONLY) 
 	@Enumerated(EnumType.STRING) 
 	private StatusEntrega status;
 	
-	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "data_pedido")
 	private OffsetDateTime dataPedido;
 	
-	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "data_finalizacao")
 	private OffsetDateTime dataFinalizado;
-	
-	/*
-	 * @Embedded -> Anotação para indicar que é uma relação embutida
-	 * @Enumerated(EnumType.STRING) -> Indica que o valor de retorno da classe Enum sera uma String
-	 * @JsonProperty(access = Access.READ_ONLY) -> Anotação para o usuario apenas ler(Get), e não poder modificar o valor(Set) na requisição com Json
-	 * */
 	
 }

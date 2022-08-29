@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.algaworks.api.representation.EntregaRepresentation;
+import com.algaworks.api.model.EntregaModel;
+import com.algaworks.api.model.input.EntregaInput;
 import com.algaworks.domain.model.Entrega;
 
 import lombok.AllArgsConstructor;
@@ -18,13 +19,17 @@ public class EntregaAssembler {
 	// Utilizando ModelMapper para evitar código boilerplate
 	private ModelMapper modelMapper;
 	
-	public EntregaRepresentation toModel(Entrega entrega) {
-		return modelMapper.map(entrega, EntregaRepresentation.class);
+	public EntregaModel toModel(Entrega entrega) {
+		return modelMapper.map(entrega, EntregaModel.class);
 	}
 	
-	public List<EntregaRepresentation> toColletionModel(List<Entrega> entregas) {
+	public List<EntregaModel> toColletionModel(List<Entrega> entregas) {
 		return entregas.stream()
 				.map(this::toModel)
 					.collect(Collectors.toList());
+	}
+	
+	public Entrega toEntity(EntregaInput entregaInput) {
+		return modelMapper.map(entregaInput, Entrega.class);
 	}
 }
