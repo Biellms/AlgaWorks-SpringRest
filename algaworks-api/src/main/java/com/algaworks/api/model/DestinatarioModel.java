@@ -12,4 +12,10 @@ public class DestinatarioModel {
 	private String numero;
 	private String complemento;
 	private String bairro;
+	
+	/*
+	 * public String getComplemento() { if(this.complemento == null) { return
+	 * "Não possui"; } else { return complemento; } }
+	 */
+	
 }

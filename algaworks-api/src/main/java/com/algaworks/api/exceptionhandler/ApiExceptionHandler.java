@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.domain.exception.DomainException;
+import com.algaworks.domain.exception.NaoEncontradoException;
 
 import lombok.AllArgsConstructor;
 
@@ -49,6 +50,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		problema.setCampos(campos);
 		
 		return handleExceptionInternal(ex, problema, headers, status, request); // Retorna ao usuario a Exception
+	}
+	
+	@ExceptionHandler(NaoEncontradoException.class)
+	public ResponseEntity<Object> handleNaoEncontradoException(NaoEncontradoException ex, WebRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		
+		Problem problema = new Problem();
+		problema.setStatus(status.value());
+		problema.setDataHora(OffsetDateTime.now());
+		problema.setTitulo(ex.getMessage());
+		
+		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 	
 	@ExceptionHandler(DomainException.class)

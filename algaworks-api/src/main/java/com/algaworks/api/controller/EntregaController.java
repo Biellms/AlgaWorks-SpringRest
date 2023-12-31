@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.api.assembler.EntregaAssembler;
-import com.algaworks.api.model.DestinatarioModel;
 import com.algaworks.api.model.EntregaModel;
 import com.algaworks.api.model.input.EntregaInput;
 import com.algaworks.domain.model.Entrega;

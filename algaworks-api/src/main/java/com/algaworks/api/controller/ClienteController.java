@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.algaworks.api.assembler.ClienteAssembler;
 import com.algaworks.api.model.ClienteModel;
 import com.algaworks.api.model.input.ClienteInput;
-import com.algaworks.domain.exception.DomainException;
 import com.algaworks.domain.model.Cliente;
 import com.algaworks.domain.repository.ClienteRepository;
 import com.algaworks.domain.service.ClienteService;
