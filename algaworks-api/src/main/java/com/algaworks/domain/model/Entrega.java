@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.algaworks.domain.exception.DomainException;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,11 +53,11 @@ public class Entrega {
 	@Enumerated(EnumType.STRING) 
 	private StatusEntrega status;
 	
-	@Column(name = "data_pedido")
+//	@Column(name = "data_pedido")
 	private OffsetDateTime dataPedido;
 	
-	@Column(name = "data_finalizacao")
-	private OffsetDateTime dataFinalizado;
+//	@Column(name = "data_finalizacao")
+	private OffsetDateTime dataFinalizacao;
 
 	public Ocorrencia adicionarOcorrencia(String descricao) {
 		Ocorrencia ocorrencia = new Ocorrencia();
@@ -67,5 +69,36 @@ public class Entrega {
 		
 		return ocorrencia;
 	}
+
+	public void finalizar() {
+		if(naoPoderSerFinalizada()) {
+			throw new DomainException("Entrega não pode ser finalizada!");
+		}
+		
+		setStatus(StatusEntrega.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
+	}
 	
+	public void cancelar() {
+		if(naoPoderSerFinalizada()) {
+			throw new DomainException("Entrega não pode ser cancelada!");
+		}
+		
+		setStatus(StatusEntrega.CANCELADA);
+		setDataFinalizacao(OffsetDateTime.now());
+	}
+	
+	public void reabrir() {
+		if(!naoPoderSerFinalizada()) {
+			throw new DomainException("Entrega não pode ser reaberta!");
+		}
+		
+		setStatus(StatusEntrega.PENDENTE);
+		setDataFinalizacao(null);
+	}
+	
+	public boolean naoPoderSerFinalizada() {
+		return !StatusEntrega.PENDENTE.equals(getStatus());
+	}
+
 }

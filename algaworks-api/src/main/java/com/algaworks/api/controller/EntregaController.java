@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +22,7 @@ import com.algaworks.api.model.input.EntregaInput;
 import com.algaworks.domain.model.Entrega;
 import com.algaworks.domain.repository.EntregaRepository;
 import com.algaworks.domain.service.EntregaService;
+import com.algaworks.domain.service.MudarStatusEntregaService;
 
 import lombok.AllArgsConstructor;
 
@@ -31,6 +33,7 @@ public class EntregaController {
 
 	private EntregaRepository entregaRepository;
 	private EntregaService entregaService;
+	private MudarStatusEntregaService mudarStatusEntregaService;
 	
 	/**
 	 * Implementando um modelo de representação de entrega, tanto de saida quanto de entrega
@@ -53,15 +56,36 @@ public class EntregaController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EntregaModel Solicitar(@Valid @RequestBody EntregaInput entregaInput) {
+	public EntregaModel solicitar(@Valid @RequestBody EntregaInput entregaInput) {
 		Entrega novaEntreda = entregaAssembler.toEntity(entregaInput);
 		Entrega entregaSolicitada = entregaService.solicitar(novaEntreda);
 		
 		return entregaAssembler.toModel(entregaSolicitada);
 	}
+	
+	@PutMapping("/{entregaId}/finalizar")
+	@ResponseStatus(HttpStatus.OK)
+	public EntregaModel finalizar(@PathVariable Long entregaId) {
+		Entrega entrega = mudarStatusEntregaService.finalizar(entregaId);
+		return entregaAssembler.toModel(entrega);
+	}
+	
+	@PutMapping("/{entregaId}/cancelar")
+	@ResponseStatus(HttpStatus.OK)
+	public EntregaModel cancelar(@PathVariable Long entregaId) {
+		Entrega entrega = mudarStatusEntregaService.cancelar(entregaId);
+		return entregaAssembler.toModel(entrega);
+	}
+	
+	@PutMapping("/{entregaId}/reabrir")
+	@ResponseStatus(HttpStatus.OK)
+	public EntregaModel reabrir(@PathVariable Long entregaId) {
+		Entrega entrega = mudarStatusEntregaService.reabrir(entregaId);
+		return entregaAssembler.toModel(entrega);
+	}
 
 	@DeleteMapping("/{entregaId}")
-	public ResponseEntity<Void> Delete(@PathVariable Long entregaId) {
+	public ResponseEntity<Void> delete(@PathVariable Long entregaId) {
 		if(!entregaRepository.existsById(entregaId)) {
 			return ResponseEntity.notFound().build();
 		}
